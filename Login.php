@@ -1,31 +1,17 @@
 <?php
-require_once "./config.php";
+    require_once "./config.php";
 
-$nome = $_POST['nome'];
-$telefone = $_POST["telefone"];
-$email = $_POST["email"];
+    $email = $_POST["email"];
+    $senha = $_POST["senha"];
 
-$sql = "INSERT INTO sistema_agendamento (nome, telefone, email) VALUES (?, ?, ?)";
+    $sql = "SELECT email, nome FROM usuario WHERE email = '" . $email . "' AND senha = '" . $senha . "'";
+    $result = $conn->query($sql);
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('sss', $nome, $telefone, $email);
-$stmt->execute();
-
-// Verificando se a inserção foi bem-sucedida
-if ($stmt->affected_rows > 0) {
-    header("Location: /Login.html");
-} else {
-    echo "Erro ao tentar adicionar usuário";
-}
-
-$stmt->close();
-$conn->close();
-
-header("location:./Login.html");
+    if ($result->num_rows > 0) {
+        header("Location: /sistema_agendamento/Home.html");
+    } else {
+        header("Location: /sistema_agendamento/Index.html");
+    }
+   
+    $conn->close();
 ?>;
-
-<?php
-header("location:./Agendamento_da_sala.php");
-
-?>;
-
