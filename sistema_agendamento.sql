@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2024 at 02:19 AM
+-- Generation Time: Apr 04, 2024 at 05:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `sistema_agendamento`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `agenda`
+--
+
+CREATE TABLE `agenda` (
+  `id` int(11) NOT NULL,
+  `organizador` varchar(256) NOT NULL,
+  `assunto` varchar(256) NOT NULL,
+  `participantes` int(11) NOT NULL,
+  `horarioId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `agenda`
+--
+
+INSERT INTO `agenda` (`id`, `organizador`, `assunto`, `participantes`, `horarioId`) VALUES
+(2, 'anderson', 'teste agendamento sala', 2, 5);
 
 -- --------------------------------------------------------
 
@@ -42,8 +63,9 @@ CREATE TABLE `horario` (
 
 INSERT INTO `horario` (`id`, `data`, `horaInicial`, `horafinal`, `salaId`, `reservado`) VALUES
 (2, '2024-04-01', '03:19:00', '03:19:00', 7, 0),
-(5, '2024-04-08', '08:00:00', '09:00:00', 7, 0),
-(6, '2024-04-08', '09:00:00', '10:00:00', 7, 0);
+(5, '2024-04-08', '08:00:00', '09:00:00', 7, 1),
+(6, '2024-04-08', '09:00:00', '10:00:00', 7, 0),
+(7, '2024-04-04', '08:00:00', '12:00:00', 7, 0);
 
 -- --------------------------------------------------------
 
@@ -64,7 +86,8 @@ CREATE TABLE `sala` (
 --
 
 INSERT INTO `sala` (`id`, `nome`, `capacidade`, `recursos`, `status`) VALUES
-(7, 'teste74', 77, '77', 1);
+(7, 'teste74', 77, '77', 1),
+(8, 'Teste123', 123, '123', 1);
 
 -- --------------------------------------------------------
 
@@ -94,6 +117,13 @@ INSERT INTO `usuario` (`id`, `nome`, `telefone`, `email`, `senha`) VALUES
 --
 
 --
+-- Indexes for table `agenda`
+--
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_fk_horario` (`horarioId`);
+
+--
 -- Indexes for table `horario`
 --
 ALTER TABLE `horario`
@@ -117,16 +147,22 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT for table `agenda`
+--
+ALTER TABLE `agenda`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sala`
 --
 ALTER TABLE `sala`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `usuario`
@@ -137,6 +173,12 @@ ALTER TABLE `usuario`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `agenda`
+--
+ALTER TABLE `agenda`
+  ADD CONSTRAINT `id_fk_horario` FOREIGN KEY (`horarioId`) REFERENCES `horario` (`id`);
 
 --
 -- Constraints for table `horario`
