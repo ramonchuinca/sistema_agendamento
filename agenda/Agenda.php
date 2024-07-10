@@ -38,6 +38,7 @@
                     <input type="number" class="form-control"  name="participantes" id="participantes" aria-describedby="participantes" placeholder="participantes" required>
                   </div>
                   <button type="submit"  id="submit-btn" class="btn btn-primary btn-block mt-3">Salvar</button>
+                 
                   <a href="Horario.php?salaId=<?php echo htmlspecialchars($salaId); ?>" class="btn btn-secondary btn-block mt-3">Cancelar</a>
                 </form>
               </div>
